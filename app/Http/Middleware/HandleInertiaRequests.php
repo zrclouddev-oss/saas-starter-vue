@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\System\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,7 +39,10 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'name' => config('app.name'),
+            'name' => Setting::where('key', 'app_name')->value('value') ?? config('app.name'),
+            'logo' => Setting::where('key', 'app_logo')->value('value')
+                ? Storage::disk('public')->url(Setting::where('key', 'app_logo')->value('value'))
+                : null,
             'auth' => [
                 'user' => $request->user(),
             ],
