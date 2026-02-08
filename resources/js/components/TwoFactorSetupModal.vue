@@ -237,7 +237,7 @@ watch(
 
                 <template v-else>
                     <Form
-                        v-bind="confirmPassword.form()"
+                        v-bind="confirmPassword()"
                         reset-on-error
                         @finish="code = ''"
                         @success="isOpen = false"

@@ -23,7 +23,7 @@ class TenantController extends Controller
         
         $tenants = $this->tenantService->listTenants($filters);
 
-        return \Inertia\Inertia::render('system/tenants/index', [
+        return \Inertia\Inertia::render('system/tenants/Index', [
             'tenants' => \App\Http\Resources\System\TenantResource::collection($tenants),
             'filters' => $filters,
             'stats' => [

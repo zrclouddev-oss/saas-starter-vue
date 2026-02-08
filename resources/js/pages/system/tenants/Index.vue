@@ -78,10 +78,6 @@ type TenantsPageProps = AppPageProps<{
         status?: string;
     };
     plans: Plan[];
-    flash: {
-        success?: string;
-        error?: string;
-    };
 }>;
 
 const page = usePage<TenantsPageProps>();

@@ -7,11 +7,17 @@ import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { toUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
 import { edit as editProfile } from '@/routes/profile';
+import { edit as editGuestRegistration } from '@/routes/system/settings/guest-register';
 import { show } from '@/routes/two-factor';
 import { edit as editPassword } from '@/routes/user-password';
 import { type NavItem } from '@/types';
+import { edit as editGeneral } from '@/routes/system/settings/general';
 
 const sidebarNavItems: NavItem[] = [
+    {
+        title: 'General',
+        href: editGeneral(),
+    },
     {
         title: 'Profile',
         href: editProfile(),
@@ -28,6 +34,10 @@ const sidebarNavItems: NavItem[] = [
         title: 'Appearance',
         href: editAppearance(),
     },
+    {
+        title: 'Guest Registration',
+        href: editGuestRegistration(),
+    }
 ];
 
 const { isCurrentUrl } = useCurrentUrl();

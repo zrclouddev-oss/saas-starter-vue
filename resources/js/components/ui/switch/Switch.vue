@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SwitchRootEmits, SwitchRootProps } from "reka-ui"
+import type { SwitchRootProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
 import {
@@ -11,7 +11,10 @@ import { cn } from "@/lib/utils"
 
 const props = defineProps<SwitchRootProps & { class?: HTMLAttributes["class"] }>()
 
-const emits = defineEmits<SwitchRootEmits>()
+// Definir explícitamente el evento update:checked
+const emits = defineEmits<{
+  'update:checked': [value: boolean]
+}>()
 
 const delegatedProps = reactiveOmit(props, "class")
 

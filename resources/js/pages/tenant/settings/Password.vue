@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
-import PasswordController from '@/actions/App/Http/Controllers/Settings/PasswordController';
+import { update as updatePassword } from '@/actions/App/Http/Controllers/Tenant/Settings/PasswordController';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
@@ -34,7 +34,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
                 />
 
                 <Form
-                    v-bind="PasswordController.update.form()"
+                    v-bind="updatePassword()"
                     :options="{
                         preserveScroll: true,
                     }"

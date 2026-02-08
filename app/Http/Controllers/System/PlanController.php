@@ -25,7 +25,7 @@ class PlanController extends Controller
         $filters = $request->only(['search', 'is_active', 'is_free']);
         $plans = $this->planService->listPlans($filters);
 
-        return Inertia::render('system/plans/index', [
+        return Inertia::render('system/plans/Index', [
             'plans' => PlanResource::collection($plans),
             'filters' => $filters,
             'stats' => [

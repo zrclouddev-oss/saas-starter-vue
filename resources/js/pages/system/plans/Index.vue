@@ -53,10 +53,6 @@ type PlansPageProps = AppPageProps<{
         active: number;
         inactive: number;
     };
-    flash?: {
-        success?: string;
-        error?: string;
-    };
 }>;
 
 const page = usePage<PlansPageProps>();

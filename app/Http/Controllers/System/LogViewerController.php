@@ -90,7 +90,7 @@ class LogViewerController extends Controller
             ];
         }
 
-        return Inertia::render('system/logs/index', [
+        return Inertia::render('system/logs/Index', [
             'files' => $files,
             'currentFile' => $currentLog,
             'logs' => $logs,

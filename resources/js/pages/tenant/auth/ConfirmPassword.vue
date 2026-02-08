@@ -17,7 +17,7 @@ import { store } from '@/actions/Laravel/Fortify/Http/Controllers/ConfirmablePas
         <Head title="Confirm password" />
 
         <Form
-            v-bind="store.form()"
+            v-bind="store()"
             reset-on-success
             v-slot="{ errors, processing }"
         >
