@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { TransitionRoot } from '@headlessui/vue';
 import type { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -21,30 +20,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 interface Props {
     app_name: string;
     app_logo: string | null;
+    settings_general_update_url: string;
 }
 
 const props = defineProps<Props>();
-
-const fileInput = ref<HTMLInputElement | null>(null);
-const logoPreview = ref<string | null>(null);
 
 const form = useForm({
     app_name: props.app_name,
     app_logo: null as File | null,
 });
 
-const submit = () => {
-    form.post('/settings/general', {
-        preserveScroll: true,
-        onSuccess: () => {
-            if (fileInput.value) {
-                fileInput.value.value = '';
-            }
-            form.app_logo = null;
-            logoPreview.value = null;
-        },
-    });
-};
+const fileInput = ref<HTMLInputElement | null>(null);
+const logoPreview = ref<string | null>(null);
 
 const selectNewLogo = () => {
     fileInput.value?.click();
@@ -57,12 +44,27 @@ const updateLogoPreview = (event: Event) => {
     if (!photo) return;
 
     form.app_logo = photo;
-
     const reader = new FileReader();
     reader.onload = (e) => {
         logoPreview.value = e.target?.result as string;
     };
     reader.readAsDataURL(photo);
+};
+
+const submit = () => {
+    form.post(props.settings_general_update_url, {
+        preserveScroll: true,
+        onSuccess: () => {
+            if (fileInput.value) {
+                fileInput.value.value = '';
+            }
+            form.app_logo = null;
+            logoPreview.value = null;
+            
+            // Reload shared props to update logo and name in sidebar without full page refresh
+            router.reload({ only: ['name', 'logo'] });
+        },
+    });
 };
 </script>
 
@@ -137,19 +139,21 @@ const updateLogoPreview = (event: Event) => {
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <Button :disabled="form.processing">Save</Button>
+                        <Button type="submit" :disabled="form.processing">Save</Button>
 
-                        <TransitionRoot
-                            :show="form.recentlySuccessful"
-                            enter="transition ease-in-out"
-                            enter-from="opacity-0"
-                            leave="transition ease-in-out"
-                            leave-to="opacity-0"
+                        <Transition
+                            enter-active-class="transition ease-in-out"
+                            enter-from-class="opacity-0"
+                            leave-active-class="transition ease-in-out"
+                            leave-to-class="opacity-0"
                         >
-                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <p
+                                v-if="form.recentlySuccessful"
+                                class="text-sm text-gray-600 dark:text-gray-400"
+                            >
                                 Saved.
                             </p>
-                        </TransitionRoot>
+                        </Transition>
                     </div>
                 </form>
             </div>

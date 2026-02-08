@@ -17,6 +17,7 @@ class SystemSettingController extends Controller
         return Inertia::render('system/settings/General', [
             'app_name' => Setting::where('key', 'app_name')->value('value') ?? config('app.name'),
             'app_logo' => Setting::where('key', 'app_logo')->value('value'),
+            'settings_general_update_url' => route('system.settings.general'),
         ]);
     }
 
@@ -50,7 +51,8 @@ class SystemSettingController extends Controller
             );
         }
 
-        return redirect()->back()->with('success', 'Settings updated successfully.');
+        return redirect()->back()
+            ->with('success', 'Settings updated successfully.');
     }
 
     /**
