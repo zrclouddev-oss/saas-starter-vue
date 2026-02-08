@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AppLayout from '@/layouts/AppLayout.vue';
-import type { BreadcrumbItem, PageProps } from '@/types';
+import type { BreadcrumbItem, AppPageProps } from '@/types';
 import { toast } from 'vue-sonner';
 import PlanFormModal from './components/PlanFormModal.vue';
 import DeletePlanDialog from './components/DeletePlanDialog.vue';
@@ -35,7 +35,7 @@ type Plan = {
     tenants_count: number;
 };
 
-type PlansPageProps = PageProps & {
+type PlansPageProps = AppPageProps<{
     plans: {
         data: Plan[];
         current_page: number;
@@ -53,7 +53,11 @@ type PlansPageProps = PageProps & {
         active: number;
         inactive: number;
     };
-};
+    flash?: {
+        success?: string;
+        error?: string;
+    };
+}>;
 
 const page = usePage<PlansPageProps>();
 const props = defineProps<PlansPageProps>();
@@ -79,23 +83,25 @@ watch(
 );
 
 // Handle search
-const handleSearch = (value: string) => {
-    search.value = value;
+const handleSearch = (value: string | number) => {
+    const stringValue = String(value);
+    search.value = stringValue;
     router.get(
         '/plans',
-        { search: value || undefined },
+        { search: stringValue || undefined },
         { preserveState: true, replace: true }
     );
 };
 
 // Handle tab change
-const handleTabChange = (value: string) => {
-    activeTab.value = value;
+const handleTabChange = (value: string | number) => {
+    const stringValue = String(value);
+    activeTab.value = stringValue;
     const params: Record<string, string> = { search: search.value };
 
-    if (value === 'active') {
+    if (stringValue === 'active') {
         params.is_active = '1';
-    } else if (value === 'inactive') {
+    } else if (stringValue === 'inactive') {
         params.is_active = '0';
     }
 

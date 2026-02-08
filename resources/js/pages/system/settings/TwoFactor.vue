@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
-import { disable, enable, show } from '@/routes/two-factor';
+import { destroy as disable, store as enable } from '@/actions/Laravel/Fortify/Http/Controllers/TwoFactorAuthenticationController';
 import type { BreadcrumbItem } from '@/types';
 
 type Props = {
@@ -26,7 +26,7 @@ withDefaults(defineProps<Props>(), {
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Two-Factor Authentication',
-        href: show.url(),
+        href: '/settings/two-factor',
     },
 ];
 

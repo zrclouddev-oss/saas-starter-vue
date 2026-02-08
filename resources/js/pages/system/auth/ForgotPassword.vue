@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { login } from '@/routes';
-import { email } from '@/routes/password';
+import { store as email } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';
 
 defineProps<{
     status?: string;

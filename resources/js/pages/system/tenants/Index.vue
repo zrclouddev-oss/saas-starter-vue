@@ -57,7 +57,9 @@ type Tenant = {
     created_at: string;
 };
 
-type PageProps = {
+import type { AppPageProps } from '@/types';
+
+type TenantsPageProps = AppPageProps<{
     tenants: {
         data: Tenant[];
         current_page: number;
@@ -80,10 +82,10 @@ type PageProps = {
         success?: string;
         error?: string;
     };
-};
+}>;
 
-const page = usePage<PageProps>();
-const props = defineProps<PageProps>();
+const page = usePage<TenantsPageProps>();
+const props = defineProps<TenantsPageProps>();
 
 const search = ref(props.filters.search || '');
 const activeTab = ref(props.filters.status?.toLowerCase() || 'all');

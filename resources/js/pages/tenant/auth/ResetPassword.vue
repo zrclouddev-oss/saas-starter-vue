@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/AuthLayout.vue';
-import { update } from '@/routes/password';
+import { store as update } from '@/actions/Laravel/Fortify/Http/Controllers/NewPasswordController';
 
 const props = defineProps<{
     token: string;

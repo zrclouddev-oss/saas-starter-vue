@@ -21,7 +21,7 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { useAppearance } from '@/composables/useAppearance';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
-import { confirm } from '@/routes/two-factor';
+import { store as confirmPassword } from '@/actions/Laravel/Fortify/Http/Controllers/ConfirmablePasswordController';
 import type { TwoFactorConfigContent } from '@/types';
 
 type Props = {
@@ -237,7 +237,7 @@ watch(
 
                 <template v-else>
                     <Form
-                        v-bind="confirm.form()"
+                        v-bind="confirmPassword.form()"
                         reset-on-error
                         @finish="code = ''"
                         @success="isOpen = false"
