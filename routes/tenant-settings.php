@@ -25,6 +25,15 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('tenant/settings/Appearance');
     })->name('tenant.settings.appearance.edit');
 
+    Route::get('settings/smtp', [\App\Http\Controllers\Tenant\Settings\SmtpController::class, 'edit'])
+        ->name('tenant.settings.smtp.edit');
+
+    Route::post('settings/smtp', [\App\Http\Controllers\Tenant\Settings\SmtpController::class, 'update'])
+        ->name('tenant.settings.smtp');
+
+    Route::post('settings/smtp/test', [\App\Http\Controllers\Tenant\Settings\SmtpController::class, 'test'])
+        ->name('tenant.settings.smtp.test');
+
     /*
     Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])
         ->name('two-factor.show');

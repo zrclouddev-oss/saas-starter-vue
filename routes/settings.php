@@ -40,4 +40,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('settings/guest-register', [\App\Http\Controllers\System\Settings\SystemSettingController::class, 'updateGuestRegistration'])
         ->name('system.settings.guest-register');
+
+    Route::get('settings/smtp', [\App\Http\Controllers\System\Settings\SmtpController::class, 'edit'])
+        ->name('system.settings.smtp.edit');
+
+    Route::post('settings/smtp', [\App\Http\Controllers\System\Settings\SmtpController::class, 'update'])
+        ->name('system.settings.smtp');
+
+    Route::post('settings/smtp/test', [\App\Http\Controllers\System\Settings\SmtpController::class, 'test'])
+        ->name('system.settings.smtp.test');
 });

@@ -37,6 +37,10 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Guest Registration',
         href: editGuestRegistration(),
+    },
+    {
+        title: 'SMTP',
+        href: '/settings/smtp',
     }
 ];
 

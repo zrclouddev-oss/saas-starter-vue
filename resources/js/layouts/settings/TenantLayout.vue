@@ -22,6 +22,10 @@ const tenantSidebarNavItems: NavItem[] = [
         title: 'Appearance',
         href: tenant.settings.appearance.edit(),
     },
+    {
+        title: 'SMTP',
+        href: '/settings/smtp',
+    },
 ];
 
 const { isCurrentUrl } = useCurrentUrl();
