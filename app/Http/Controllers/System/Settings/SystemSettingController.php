@@ -14,7 +14,7 @@ class SystemSettingController extends Controller
      */
     public function editGeneral()
     {
-        return Inertia::render('system/settings/general', [
+        return Inertia::render('system/settings/General', [
             'app_name' => Setting::where('key', 'app_name')->value('value') ?? config('app.name'),
             'app_logo' => Setting::where('key', 'app_logo')->value('value'),
         ]);
@@ -61,7 +61,7 @@ class SystemSettingController extends Controller
         $setting = Setting::where('key', 'guest_registration')->first();
         $enabled = $setting ? (bool) $setting->value : false;
 
-        return Inertia::render('system/settings/guest-register', [
+        return Inertia::render('system/settings/GuestRegister', [
             'guest_registration_enabled' => $enabled,
         ]);
     }

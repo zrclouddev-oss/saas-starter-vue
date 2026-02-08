@@ -54,7 +54,7 @@ class DashboardController extends Controller
                 ];
             });
 
-        return Inertia::render('system/dashboard', [
+        return Inertia::render('system/Dashboard', [
             'stats' => $stats,
             'recentTenants' => $recentTenants,
             'planDistribution' => $planDistribution,

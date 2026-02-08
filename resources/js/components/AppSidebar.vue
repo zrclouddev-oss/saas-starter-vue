@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, Package, Users, FileText } from 'lucide-vue-next';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -14,6 +14,9 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as plansIndex } from '@/routes/plans';
+import { index as tenantsIndex } from '@/routes/tenants';
+import { index as logsIndex } from '@/routes/logs';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
 
@@ -23,6 +26,21 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Plans',
+        href: plansIndex(),
+        icon: Package,
+    },
+    {
+        title: 'Tenants',
+        href: tenantsIndex(),
+        icon: Users,
+    },
+    {
+        title: 'Logs',
+        href: logsIndex(),
+        icon: FileText,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
@@ -31,11 +49,11 @@ const footerNavItems: NavItem[] = [
         href: 'https://github.com/laravel/vue-starter-kit',
         icon: Folder,
     },
-    {
+    /*{
         title: 'Documentation',
         href: 'https://laravel.com/docs/starter-kits#vue',
         icon: BookOpen,
-    },
+    },*/
 ];
 </script>
 

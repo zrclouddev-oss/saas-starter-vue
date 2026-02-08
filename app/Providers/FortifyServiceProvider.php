@@ -47,30 +47,30 @@ class FortifyServiceProvider extends ServiceProvider
      */
     private function configureViews(): void
     {
-        Fortify::loginView(fn (Request $request) => Inertia::render('system/auth/login', [
+        Fortify::loginView(fn (Request $request) => Inertia::render('system/auth/Login', [
             'canResetPassword' => Features::enabled(Features::resetPasswords()),
             'canRegister' => Features::enabled(Features::registration()),
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::resetPasswordView(fn (Request $request) => Inertia::render('system/auth/reset-password', [
+        Fortify::resetPasswordView(fn (Request $request) => Inertia::render('system/auth/ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]));
 
-        Fortify::requestPasswordResetLinkView(fn (Request $request) => Inertia::render('system/auth/forgot-password', [
+        Fortify::requestPasswordResetLinkView(fn (Request $request) => Inertia::render('system/auth/ForgotPassword', [
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::verifyEmailView(fn (Request $request) => Inertia::render('system/auth/verify-email', [
+        Fortify::verifyEmailView(fn (Request $request) => Inertia::render('system/auth/VerifyEmail', [
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::registerView(fn () => Inertia::render('system/auth/register'));
+        Fortify::registerView(fn () => Inertia::render('system/auth/Register'));
 
-        Fortify::twoFactorChallengeView(fn () => Inertia::render('system/auth/two-factor-challenge'));
+        Fortify::twoFactorChallengeView(fn () => Inertia::render('system/auth/TwoFactorChallenge'));
 
-        Fortify::confirmPasswordView(fn () => Inertia::render('system/auth/confirm-password'));
+        Fortify::confirmPasswordView(fn () => Inertia::render('system/auth/ConfirmPassword'));
     }
 
     /**

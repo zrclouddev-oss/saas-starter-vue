@@ -17,7 +17,7 @@ class PasswordController extends Controller
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('tenant/settings/password');
+        return Inertia::render('tenant/settings/Password');
     }
 
     /**
