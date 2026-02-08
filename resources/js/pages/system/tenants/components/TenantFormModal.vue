@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -47,6 +48,8 @@ const form = useForm({
     status: 'Active', // Default status
 });
 
+const hostname = computed(() => window.location.hostname);
+
 const handleSubmit = () => {
     form.post('/tenants', {
         onSuccess: () => {
@@ -56,6 +59,7 @@ const handleSubmit = () => {
     });
 };
 </script>
+
 
 <template>
     <Dialog :open="open" @update:open="emit('update:open', $event)">
@@ -95,7 +99,7 @@ const handleSubmit = () => {
                             <div
                                 class="flex items-center rounded-r-md border border-l-0 bg-muted px-3 text-sm text-muted-foreground"
                             >
-                                .{{ window.location.hostname }}
+                                .{{ hostname }}
                             </div>
                         </div>
                         <InputError :message="form.errors.domain" />

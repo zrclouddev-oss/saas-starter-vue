@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import AuthBase from '@/layouts/AuthLayout.vue';
+import AuthBase from '@/layouts/TenantAuthLayout.vue';
 import { register } from '@/routes';
 import { store } from '@/actions/App/Http/Controllers/Tenant/Auth/LoginController';
 import { create as request } from '@/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController';

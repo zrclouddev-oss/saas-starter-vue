@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('tenant.settings.password.update');
 
     Route::get('settings/appearance', function () {
-        return Inertia::render('tenant/settings/appearance');
+        return Inertia::render('tenant/settings/Appearance');
     })->name('tenant.settings.appearance.edit');
 
     /*

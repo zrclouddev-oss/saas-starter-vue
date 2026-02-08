@@ -8,8 +8,9 @@ import TwoFactorSetupModal from '@/components/TwoFactorSetupModal.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
-import AppLayout from '@/layouts/AppLayout.vue';
-import SettingsLayout from '@/layouts/settings/Layout.vue';
+import TenantAppLayout from '@/layouts/TenantAppLayout.vue';
+import TenantLayout from '@/layouts/settings/TenantLayout.vue';
+import tenant from '@/routes/tenant';
 import { destroy as disable, store as enable } from '@/actions/Laravel/Fortify/Http/Controllers/TwoFactorAuthenticationController';
 import type { BreadcrumbItem } from '@/types';
 
@@ -26,7 +27,7 @@ withDefaults(defineProps<Props>(), {
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Two-Factor Authentication',
-        href: '/settings/two-factor',
+        href: tenant.settings.profile.edit().url,
     },
 ];
 
@@ -39,12 +40,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
+    <TenantAppLayout :breadcrumbs="breadcrumbs">
         <Head title="Two-Factor Authentication" />
 
         <h1 class="sr-only">Two-Factor Authentication Settings</h1>
 
-        <SettingsLayout>
+        <TenantLayout>
             <div class="space-y-6">
                 <Heading
                     variant="small"
@@ -120,6 +121,6 @@ onUnmounted(() => {
                     :twoFactorEnabled="twoFactorEnabled"
                 />
             </div>
-        </SettingsLayout>
-    </AppLayout>
+        </TenantLayout>
+    </TenantAppLayout>
 </template>

@@ -11,8 +11,10 @@ class LoginController extends Controller
 {
     public function create()
     {
-        return Inertia::render('tenant/auth/login', [
+        return Inertia::render('tenant/auth/Login', [
             'status' => session('status'),
+            'canResetPassword' => true,
+            'canRegister' => false,
         ]);
     }
 
@@ -33,7 +35,7 @@ class LoginController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
-
+ 
     public function destroy(Request $request)
     {
         Auth::guard('web')->logout();

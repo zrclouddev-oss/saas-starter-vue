@@ -30,7 +30,7 @@ use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 |
 */
 
-Route::domain(env('APP_URL_BASE'))->group(function () {
+Route::domain(config('app.url_base'))->group(function () {
     
     // Root redirect
     Route::get('/', function () {
