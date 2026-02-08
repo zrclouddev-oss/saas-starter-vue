@@ -13,7 +13,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
 import InputError from '@/components/InputError.vue';
 
 type Plan = {
@@ -203,37 +202,39 @@ const handleSubmit = () => {
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="space-y-0.5">
-                            <Label for="is_free">Free Plan</Label>
+                            <Label for="is_free" class="cursor-pointer">Free Plan</Label>
                             <p class="text-sm text-muted-foreground">
                                 Mark this plan as free (price will be set to 0)
                             </p>
                         </div>
-                        <Switch
-                            id="is_free"
-                            :checked="form.is_free"
-                            @update:checked="
-                                (checked) => {
-                                    form.is_free = checked;
-                                    if (checked) {
-                                        form.price = 0;
-                                    }
-                                }
-                            "
-                        />
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input
+                                id="is_free"
+                                type="checkbox"
+                                v-model="form.is_free"
+                                @change="form.is_free && (form.price = 0)"
+                                class="sr-only peer"
+                            />
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        </label>
                     </div>
 
                     <div class="flex items-center justify-between">
                         <div class="space-y-0.5">
-                            <Label for="is_active">Active</Label>
+                            <Label for="is_active" class="cursor-pointer">Active</Label>
                             <p class="text-sm text-muted-foreground">
                                 Make this plan available for new subscriptions
                             </p>
                         </div>
-                        <Switch
-                            id="is_active"
-                            :checked="form.is_active"
-                            @update:checked="(checked) => (form.is_active = checked)"
-                        />
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input
+                                id="is_active"
+                                type="checkbox"
+                                v-model="form.is_active"
+                                class="sr-only peer"
+                            />
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        </label>
                     </div>
                 </div>
 

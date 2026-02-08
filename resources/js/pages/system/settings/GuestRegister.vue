@@ -3,7 +3,6 @@ import { Head, router } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import Heading from '@/components/Heading.vue';
 import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
 import AppLayout from '@/layouts/AppLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import type { BreadcrumbItem } from '@/types';
@@ -23,13 +22,14 @@ const props = defineProps<Props>();
 
 const enabled = ref(props.guest_registration_enabled);
 
-const toggleGuestRegistration = (checked: boolean) => {
+const toggleGuestRegistration = () => {
+    const newValue = !enabled.value;
     const previousValue = enabled.value;
-    enabled.value = checked;
+    enabled.value = newValue;
 
     router.post(
         '/settings/guest-register',
-        { enabled: checked },
+        { enabled: newValue },
         {
             preserveScroll: true,
             preserveState: true,
@@ -59,7 +59,7 @@ const toggleGuestRegistration = (checked: boolean) => {
                         <div class="flex-1 space-y-0.5">
                             <Label
                                 for="guest-registration"
-                                class="text-base font-medium"
+                                class="text-base font-medium cursor-pointer"
                             >
                                 Enable public registration
                             </Label>
@@ -74,11 +74,17 @@ const toggleGuestRegistration = (checked: boolean) => {
                             </p>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <Switch
-                                id="guest-registration"
-                                :checked="enabled"
-                                @update:checked="toggleGuestRegistration"
-                            />
+                            <!-- Custom Toggle Switch -->
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input
+                                    id="guest-registration"
+                                    type="checkbox"
+                                    :checked="enabled"
+                                    @change="toggleGuestRegistration"
+                                    class="sr-only peer"
+                                />
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
                         </div>
                     </div>
 

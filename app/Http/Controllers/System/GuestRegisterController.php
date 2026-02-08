@@ -27,7 +27,7 @@ class GuestRegisterController extends Controller
         $enabled = $setting ? (bool) $setting->value : false;
 
         if (!$enabled) {
-            return Inertia::render('system/GuestRegister/Disabled');
+            return Inertia::render('system/guest-register/Disabled');
         }
 
         // Get Free Plan (assuming there is one, or just pick the first one)
@@ -35,7 +35,7 @@ class GuestRegisterController extends Controller
         // For now, let's try to find a plan with price 0
         $freePlan = Plan::where('price', 0)->first();
 
-        return Inertia::render('system/GuestRegister/Index', [
+        return Inertia::render('system/guest-register/Index', [
             'app_url_base' => config('app.url_base'),
             'free_plan' => $freePlan ? [
                 'id' => $freePlan->id,
