@@ -49,4 +49,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('settings/smtp/test', [\App\Http\Controllers\System\Settings\SmtpController::class, 'test'])
         ->name('system.settings.smtp.test');
+
+    // API Tokens
+    Route::post('settings/api-token/generate', [\App\Http\Controllers\System\Settings\ApiTokenController::class, 'generate'])
+        ->name('system.settings.api-token.generate');
+
+    Route::delete('settings/api-token', [\App\Http\Controllers\System\Settings\ApiTokenController::class, 'revoke'])
+        ->name('system.settings.api-token.revoke');
 });

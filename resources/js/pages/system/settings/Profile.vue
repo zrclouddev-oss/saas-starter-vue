@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { Form, Head, Link, usePage } from '@inertiajs/vue3';
+import { Form, Head, Link, router, usePage } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+import { Copy, Check } from 'lucide-vue-next';
 import { update as updateProfile } from '@/actions/App/Http/Controllers/System/Settings/ProfileController';
 import DeleteUser from '@/components/DeleteUser.vue';
 import Heading from '@/components/Heading.vue';
@@ -16,9 +18,11 @@ import { type BreadcrumbItem } from '@/types';
 type Props = {
     mustVerifyEmail: boolean;
     status?: string;
+    token?: string;
+    hasTokens?: boolean;
 };
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
@@ -29,6 +33,66 @@ const breadcrumbItems: BreadcrumbItem[] = [
 
 const page = usePage();
 const user = page.props.auth.user;
+
+// API Token management
+const currentToken = ref<string | null>(props.token || null);
+const copied = ref(false);
+
+// Watch for token changes from props (after redirect)
+watch(() => props.token, (newToken) => {
+    if (newToken) {
+        currentToken.value = newToken;
+    }
+});
+
+const generateToken = () => {
+    router.post('/settings/api-token/generate', {}, {
+        preserveScroll: true,
+        onSuccess: () => {
+            // Token will be updated via props after redirect
+        },
+    });
+};
+
+const copyToken = async () => {
+    if (!currentToken.value) return;
+
+    try {
+        // Try modern clipboard API first
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(currentToken.value);
+        } else {
+            // Fallback for HTTP or older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = currentToken.value;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+        
+        copied.value = true;
+        setTimeout(() => {
+            copied.value = false;
+        }, 2000);
+    } catch (error) {
+        console.error('Failed to copy token:', error);
+        alert('Failed to copy token. Please copy it manually.');
+    }
+};
+
+const revokeToken = () => {
+    if (confirm('Are you sure you want to revoke your API token? This action cannot be undone.')) {
+        router.delete('/settings/api-token', {
+            preserveScroll: true,
+            onSuccess: () => {
+                currentToken.value = null;
+            },
+        });
+    }
+};
 </script>
 
 <template>
@@ -122,6 +186,60 @@ const user = page.props.auth.user;
                         </Transition>
                     </div>
                 </Form>
+            </div>
+
+            <!-- API Token Section -->
+            <div class="flex flex-col space-y-6">
+                <Heading
+                    variant="small"
+                    title="API Token"
+                    description="Manage your personal access token for API authentication"
+                />
+
+                <div class="space-y-4">
+                    <div v-if="currentToken" class="space-y-2">
+                        <Label>Your API Token</Label>
+                        <div class="flex gap-2">
+                            <Input
+                                v-model="currentToken"
+                                readonly
+                                class="font-mono text-sm"
+                            />
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                @click="copyToken"
+                                :title="copied ? 'Copied!' : 'Copy to clipboard'"
+                            >
+                                <Check v-if="copied" class="h-4 w-4" />
+                                <Copy v-else class="h-4 w-4" />
+                            </Button>
+                        </div>
+                        <p class="text-sm text-muted-foreground">
+                            Make sure to copy your token now. You won't be able to see it again!
+                        </p>
+                    </div>
+
+                    <div v-else class="rounded-lg border bg-muted/50 p-4">
+                        <p class="text-sm text-muted-foreground">
+                            No active API token. Generate one to access the API programmatically.
+                        </p>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <Button @click="generateToken">
+                            {{ currentToken || props.hasTokens ? 'Regenerate Token' : 'Generate Token' }}
+                        </Button>
+
+                        <Button
+                            v-if="currentToken || props.hasTokens"
+                            variant="destructive"
+                            @click="revokeToken"
+                        >
+                            Revoke Token
+                        </Button>
+                    </div>
+                </div>
             </div>
 
             <DeleteUser />

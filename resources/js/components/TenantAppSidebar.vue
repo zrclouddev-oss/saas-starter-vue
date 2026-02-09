@@ -23,6 +23,11 @@ const mainNavItems: NavItem[] = [
         href: tenant.dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Users',
+        href: '/users',
+        icon: Folder,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

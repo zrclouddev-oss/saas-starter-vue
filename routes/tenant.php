@@ -45,6 +45,10 @@ Route::middleware([
             return redirect()->route('tenant.dashboard');
         });
 
+        // User Management
+        Route::resource('users', \App\Http\Controllers\Tenant\UserController::class)
+            ->except(['show', 'create', 'edit']);
+
         // Load Tenant Settings Routes (Profile, Password, 2FA)
         require __DIR__.'/tenant-settings.php';
     });

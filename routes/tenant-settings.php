@@ -34,6 +34,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('settings/smtp/test', [\App\Http\Controllers\Tenant\Settings\SmtpController::class, 'test'])
         ->name('tenant.settings.smtp.test');
 
+    // API Tokens
+    Route::post('settings/api-token/generate', [\App\Http\Controllers\Tenant\Settings\ApiTokenController::class, 'generate'])
+        ->name('tenant.settings.api-token.generate');
+
+    Route::delete('settings/api-token', [\App\Http\Controllers\Tenant\Settings\ApiTokenController::class, 'revoke'])
+        ->name('tenant.settings.api-token.revoke');
+
     /*
     Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])
         ->name('two-factor.show');
