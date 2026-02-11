@@ -36,7 +36,7 @@ Sigue estos pasos para levantar el proyecto en tu entorno local:
 
 1.  **Clonar el repositorio**:
     ```bash
-    git clone https://git.jczap.net/templates/saas-starter-vue.git
+    git clone https://github.com/zrclouddev-oss/saas-starter-vue.git
     cd saas-starter-vue
     ```
 
@@ -95,4 +95,4 @@ El sitio estará disponible en la URL configurada (por defecto `http://saas-star
 -   `/database`: Migraciones y Seeders.
 
 ---
-Creado por [ZRCloud](https://git.jczap.net/ZRCloud).
+Creado por [ZRCloud](https://git.jczap.net/cloud).
